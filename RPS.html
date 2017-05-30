@@ -1,0 +1,164 @@
+<!DOCTYPE HTML>
+<html>
+
+<body>
+
+    <p>Chose Rock, Paper or Scissors: </p>
+    <select name="playerChoice" onchange="setType()">
+        <option value="noChoice"selected disabled>Select from below</option>
+        <option value="rock">Rock</option>
+        <option value="paper">Paper</option>
+        <option value="scissors">Scissors</option>
+	</select>
+
+    <input type="button" name="button" value="Rock, Paper, Scissors!" onclick="RPS()"></button>
+
+    <p id="result"></p>
+
+
+    <input type="button" name="button2" value="Reset" onclick="reset()"></button>
+    <input type="button" name="button" value="Show Stats" onclick="showStats()"></button>
+    <input type="button" name="button" value="Show Player Choices" onclick="showPC()"></button>
+    <input type="button" name="button" value="Show Computer Choices" onclick="showCC()"></button>
+
+    <p id="stats"></p>
+    <p id="percentage"></p>
+
+    <script>
+        var playerChoice;
+        var compChoice;
+        var winCount = 0;
+        var compWins = 0;
+        var gamesPlayed = 0;
+        var drawCount = 0;
+
+        var humanWinp = 0;
+        var compWinp = 0;
+        var drawsp = 0;
+
+        var compRock = 0;
+        var compPaper = 0;
+        var compSciss = 0;
+
+        var compRockp = 0;
+        var compPaperp = 0;
+        var CompScissp = 0;
+
+        var humanRock = 0;
+        var humanPaper = 0;
+        var humanSciss = 0;
+
+        var humanRockp = 0;
+        var humanPaperp = 0;
+        var humanScissp = 0;
+
+
+
+        function reset() {
+            winCount = 0;
+            compWins = 0;
+            gamesPlayed = 0;
+            drawCount = 0;
+
+            window.alert("Game Stats Reset, boi!");
+        }
+
+        function showStats() {
+            document.getElementById("stats").innerHTML = "Computer: " + compWins + " Player: " + winCount + " Draws: " + drawCount + " Games Played: " + gamesPlayed;
+            document.getElementById("percentage").innerHTML = "Comp Win Percentage: " + compWinp.toFixed(2) + "% Player Win Percentage: " + humanWinp.toFixed(2) + "% Draw percentage: " + drawsp.toFixed(2) + "%";
+        }
+
+        function showCC() {
+            document.getElementById("stats").innerHTML = "Comp Choices: " + " Rock: " + compRock + " Paper: " + compPaper + " Scissors: " + compSciss;
+            document.getElementById("percentage").innerHTML = "Comp Choices: " + " Rock: " + compRockp.toFixed(2) + "% Paper: " + compPaperp.toFixed(2) + "% Scissors: " + compScissp.toFixed(2) + "%";
+        }
+
+        function showPC() {
+            document.getElementById("stats").innerHTML = "Player Choices: " + " Rock: " + humanRock + " Paper: " + humanPaper + " Scissors: " + humanSciss;
+            document.getElementById("percentage").innerHTML = "Player Choices: " + " Rock: " + humanRockp.toFixed(2) + "% Paper: " + humanPaperp.toFixed(2) + " Scissors: " + humanScissp.toFixed(2) + "%";
+        }
+
+        text_truncate = function(str, length, ending) {
+            if (length == null) {
+                length = 100;
+            }
+            if (ending == null) {
+                ending = '';
+            }
+            if (str.length > length) {
+                return str.substring(0, length - ending.length) + ending;
+            } else {
+                return str;
+            }
+        };
+
+        function setType() {
+            playerChoice = document.getElementsByName("playerChoice")[0].value;
+        }
+
+        var Choices = {
+            rock: 0,
+            paper: 1,
+            scissors: 2
+        };
+
+        function setCompChoice() {
+            var min = 0;
+            var max = 2;
+            var rand = Math.floor(Math.random() * (max - min + 1) + min);
+            if (rand == 0) {
+                compChoice = Choices.rock;
+                compRock++;
+            } else if (rand == 1) {
+                compChoice = Choices.paper;
+                compPaper++;
+            } else {
+                compChoice = Choices.scissors;
+                compSciss++;
+            }
+        }
+
+        var GG = {
+            rock: ["Thats a draw", "Computer Wins: Paper covers rock", "You Win: Scissors gets smashed by Rock"],
+            paper: ["You Win: Paper covers rock", "Thats a draw", "Computer Wins: Scissors cuts paper"],
+            scissors: ["Computer Wins: Scissors gets smashed by Rock", "You Win: Scissors cuts paper", "Thats a draw"]
+        };
+
+        function RPS() {
+            setCompChoice();
+
+            if (playerChoice == "rock") {
+                humanRock++;
+            } else if (playerChoice == "paper") {
+                humanPaper++;
+            } else {
+                humanSciss++;
+            }
+
+            var output = GG[playerChoice][compChoice];
+            document.getElementById("result").innerHTML = output;
+            gamesPlayed++;
+            compRockp = (compRock / gamesPlayed) * 100;
+            compPaperp = (compPaper / gamesPlayed) * 100;
+            compScissp = (compSciss / gamesPlayed) * 100;
+            humanRockp = (humanRock / gamesPlayed) * 100;
+            humanPaperp = (humanPaper / gamesPlayed) * 100;
+            humanScissp = (humanSciss / gamesPlayed) * 100;
+            console.log("Games Played: " + gamesPlayed);
+            win = text_truncate(output, 1);
+            if (win == "Y") {
+                winCount++;
+            } else if (win == "T") {
+                drawCount++;
+
+            } else {
+                compWins++;
+            }
+            humanWinp = (winCount / gamesPlayed) * 100;
+            compWinp = (compWins / gamesPlayed) * 100;
+            drawsp = (drawCount / gamesPlayed) * 100;
+        }
+    </script>
+</body>
+
+</html>

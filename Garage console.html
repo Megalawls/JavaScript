@@ -1,0 +1,226 @@
+<!DOCTYPE HTML>
+<html>
+
+<body>
+    <input type="text" id="carmake" name="carmake" placeholder="Enter Make" />
+    <input type="text" id="carmodel" name="carmodel" placeholder="Enter Model" />
+    <input type="text" id="registration" name="registration" placeholder="Enter Registration" />
+    <input type="button" value="Check-In" onclick="addCar((document.getElementById('carmake').value), (document.getElementById('carmodel').value), (document.getElementById('registration').value))" />
+    <input type="button" value="Show Vehicles in Garage" onclick="viewCars()" /><br><br>
+
+    <input type="text" id="sreg" name="sreg" placeholder="Search car by REG" />
+    <input type="button" value="Search Car" onclick="showCar(document.getElementById('sreg').value)" />
+    <input type="button" value="Select Car" onclick="selectCar(document.getElementById('sreg').value)" />
+
+
+    <select Id="Faults">
+        <option value="No Fault"selected disabled>Select a fault to add to this car from the drop-down list</option>
+        <option value="1">MOT</option>
+        <option value="2">Bumper Replacement</option>
+        <option value="3">Tyre Replacement (Per Tyre)</option>
+		<option value="4">Full Body Paint Job</option>
+		<option value="5">Paint Touch-Up</option>
+		<option value="6">Window Tinting</option>
+		<option value="7">Aspiration Conversion</option>
+		<option value="8">Exhaust Change</option>
+		<option value="9">Headlight Bulb Replacement</option>
+		<option value="10">Turbo Fitting</option>
+		<option value="11">Miscellaneous Fault</option>
+    </select>
+    <input id="Set Fault" type="button" value="Set Fault" onclick="setFault(document.getElementById('Faults').value)" />
+    <input type="button" id="Remove Car" value="Remove Car" onclick="removeCar(document.getElementById('sreg').value)" /><br><br>
+
+    <input type="console" id="console" name="console" placeholder="Console..." size="100" />
+    <input type="button" value="Submit" onclick="dothething	(document.getElementById('console').value)" />
+
+    <p id="selectedCar">
+        <p id="carresult">
+
+
+            <script>
+                var cars = [];
+                var selectedCar;
+                document.getElementById('Faults').style.visibility = 'hidden';
+                document.getElementById('Set Fault').style.visibility = 'hidden';
+                document.getElementById('Remove Car').style.visibility = 'hidden';
+
+                var faultPrice = [100, 100, 70, 750, 50, 100, 1200, 350, 30, 800, 100];
+                var fault = ["MOT", "Bumper Replacement", "Tyre Replacement", "Full Body Paint Job", "Paint Touch-Up", "Window Tinting", "Aspiration Conversion", "Exhaust Change", "Headlight Bulb Replacement", "Turbo Fitting", "Miscellaneous Fault"];
+
+                function viewCars() {
+                    document.getElementById("carresult").innerHTML = "Cars in garage: " + cars.length + "<br>"
+
+                    for (var n = 0; n < cars.length; n++) {
+                        document.getElementById("carresult").innerHTML += "Make:    " + cars[n].make + " Model:    " + cars[n].model + " Reg:    " + cars[n].reg + " Faults:    " + cars[n].faults.length + "<br>"
+                        console.log("Cars in garage: " + cars.length);
+                    }
+                    document.getElementById('Faults').style.visibility = 'hidden';
+                    document.getElementById('Set Fault').style.visibility = 'hidden';
+                    document.getElementById('Remove Car').style.visibility = 'hidden';
+                }
+
+                function showCar() {
+                    var regToSearch = document.getElementById('sreg').value;
+                    document.getElementById("carresult").innerHTML = "Search Results: <br>"
+                    for (var v = 0; v < cars.length; v++) {
+                        if (cars[v].reg.toLowerCase() == regToSearch.toLowerCase()) {
+                            document.getElementById("carresult").innerHTML += "Make: " + cars[v].make + "   Model: " + cars[v].model + "   Registration: " + cars[v].reg + "<br>" + "Faults: <br>";
+                        }
+                        for (var v1 = 0; v1 < cars[v].faults.length; v1++) {
+                            document.getElementById("carresult").innerHTML += "Fault " + (v1 + 1) + ": " + cars[v].faults[v1].carFault + "<br>";
+                        }
+                    }
+                    document.getElementById('Faults').style.visibility = 'hidden';
+                    document.getElementById('Set Fault').style.visibility = 'hidden';
+                    document.getElementById('Remove Car').style.visibility = 'hidden';
+
+                }
+
+                function selectCar() {
+                    document.getElementById("selectedCar").innerHTML = "No car with that Registration in Garage, please try again"
+                    var carToSelect = document.getElementById('sreg').value;
+                    for (var v = 0; v < cars.length; v++) {
+                        if (cars[v].reg.toLowerCase() == carToSelect) {
+                            selectedCar = cars[v];
+                            document.getElementById("selectedCar").innerHTML = "Vehicle with REG No. " + selectedCar.reg + " has been selected <br>";
+                            document.getElementById("carresult").innerHTML = "Make: " + cars[v].make + "   Model: " + cars[v].model + "   Registration: " + cars[v].reg + "<br>" + "Faults: <br>";
+                            for (var v1 = 0; v1 < cars[v].faults.length; v1++) {
+                                document.getElementById("carresult").innerHTML += "- " + cars[v].faults[v1].carFault + "<br>";
+                            }
+                            document.getElementById("Faults").style.visibility = 'visible';
+                            document.getElementById('Set Fault').style.visibility = 'visible';
+                            document.getElementById('Remove Car').style.visibility = 'visible';
+
+                        }
+                    }
+                }
+
+                function setFault() {
+                    var num = (parseInt(document.getElementById('Faults').value) - 1);
+                    for (var v = 0; v < cars.length; v++) {
+                        if (cars[v].reg == selectedCar.reg) {
+                            cars[v].faults.push({
+                                carFault: (fault[num]),
+                                faultprice: (faultPrice[num])
+                            });
+                            document.getElementById("carresult").innerHTML = "Make: " + cars[v].make + "   Model: " + cars[v].model + "   Registration: " + cars[v].reg + "<br>" + "Faults: <br>";
+                            console.log(faultPrice[num]);
+                            for (var v1 = 0; v1 < cars[v].faults.length; v1++) {
+                                document.getElementById("carresult").innerHTML += cars[v].faults[v1].carFault + " - £" + cars[v].faults[v1].faultprice + "<br>";
+                            }
+                        }
+                    }
+                }
+
+                function removeCar() {
+                    var carToRemove = document.getElementById('sreg').value;
+                    var c = confirm("Remove car from garage and generate a bill?");
+                    var a = 0;
+                    if (c == true) {
+                        document.getElementById("carresult").innerHTML = "Final bill for selected car " + selectedCar.reg + ":<br>"
+                        for (var v = 0; v < cars.length; v++) {
+                            if (cars[v].reg == carToRemove) {
+                                for (var v1 = 0; v1 < cars[v].faults.length; v1++) {
+                                    document.getElementById("carresult").innerHTML += cars[v].faults[v1].carFault + " - £" + cars[v].faults[v1].faultprice + "<br>";
+                                    a = a + cars[v].faults[v1].faultprice;
+                                }
+                                cars.splice(v, 1);
+
+                            }
+                        }
+                    }
+                    document.getElementById("carresult").innerHTML += "Total Price: £" + a + "<br> Car removed from Garage database.";
+                    document.getElementById("selectedCar").innerHTML = "Selected car deleted, please select another.";
+
+
+                }
+
+
+                function addCar(make, model, reg) {
+                    var userinput1 = document.getElementById('carmake').value;
+                    var userinput2 = document.getElementById('carmodel').value;
+                    var userinput3 = document.getElementById('registration').value;
+                    cars.push({
+                        make: userinput1,
+                        model: userinput2,
+                        reg: userinput3,
+                        faults: []
+                    });
+                    document.getElementById('Faults').style.visibility = 'hidden';
+                    document.getElementById('Set Fault').style.visibility = 'hidden';
+                }
+
+                function consoleaddCar(make, model, reg) {
+                    var userinput1 = make;
+                    var userinput2 = model;
+                    var userinput3 = reg;
+                    cars.push({
+                        make: userinput1,
+                        model: userinput2,
+                        reg: userinput3,
+                        faults: []
+                    });
+                    document.getElementById('Faults').style.visibility = 'hidden';
+                    document.getElementById('Set Fault').style.visibility = 'hidden';
+                }
+
+                function consoleremoveCar(carToRemove) {
+                    var c = confirm("Remove car from garage and generate a bill?");
+                    var a = 0;
+                    if (c == true) {
+                        document.getElementById("carresult").innerHTML = "Final bill for selected car " + carToRemove + ":<br>"
+                        for (var v = 0; v < cars.length; v++) {
+                            if (cars[v].reg == carToRemove) {
+                                for (var v1 = 0; v1 < cars[v].faults.length; v1++) {
+                                    document.getElementById("carresult").innerHTML += cars[v].faults[v1].carFault + " - £" + cars[v].faults[v1].faultprice + "<br>";
+                                    a = a + cars[v].faults[v1].faultprice;
+                                }
+                                cars.splice(v, 1);
+
+                            }
+                        }
+                    }
+                    document.getElementById("carresult").innerHTML += "Total Price: £" + a + "<br> Car removed from Garage database.";
+                    document.getElementById("selectedCar").innerHTML = "Selected car deleted, please select another.";
+                }
+
+                function consolesetFault(regg, num) {
+                    //var fault = document.getElementById('Faults').value;
+                    //var num = (parseInt(fault) - 1);
+                    for (var v = 0; v < cars.length; v++) {
+                        if (cars[v].reg == regg) {
+                            cars[v].faults.push({
+                                carFault: (fault[num]),
+                                faultprice: (faultPrice[num])
+                            });
+                            document.getElementById("carresult").innerHTML = "Make: " + cars[v].make + "   Model: " + cars[v].model + "   Registration: " + cars[v].reg + "<br>" + "Faults: <br>";
+                            console.log(faultPrice[num]);
+                            for (var v1 = 0; v1 < cars[v].faults.length; v1++) {
+                                document.getElementById("carresult").innerHTML += cars[v].faults[v1].carFault + " - £" + cars[v].faults[v1].faultprice + "<br>";
+                            }
+                        }
+                    }
+                }
+
+                function dothething() {
+                    var command = document.getElementById('console').value;
+                    var stringsplit = command.split(" ");
+                    if (stringsplit[0].toLowerCase() == "add") {
+                        consoleaddCar(stringsplit[1], stringsplit[2], stringsplit[3]);
+                    } else if (stringsplit[0].toLowerCase() == "remove") {
+                        consoleremoveCar(stringsplit[1]);
+                    } else if (stringsplit[0].toLowerCase() == "show") {
+                        viewCars();
+                    } else if (stringsplit[0].toLowerCase() == "fault") {
+                        consolesetFault(stringsplit[1], stringsplit[2]);
+                    } else if (stringsplit[0].toLowerCase() == "help") {
+                        document.getElementById("selectedCar").innerHTML = "Please use one of the following commands: <br> add x y z - Adds a car to the garage with make x, model y, and registration z <br> remove x - Removes a car in the garage that has registration x <br> show - Shows all cars in garage <br> fault x y - adds fault y to car with registration x <br>";
+                    } else {
+                        document.getElementById("selectedCar").innerHTML = "Invalid Command - use 'help' for assistance"
+                    }
+
+                }
+            </script>
+</body>
+
+</html>

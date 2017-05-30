@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html>
+
+<body>
+<script>
+
+
+	function square(num){
+	return (num * num);}
+	
+	function sum(a, b, c){
+	return (a+b+c);}
+	
+	var person = {
+	name: "Dan", age: 19, occupation: "Consultant"
+	}
+	function getOlder(){
+	person.age = (person.age + 1);
+	document.getElementById("result").innerHTML = "Aged Dan by one: " + person.age;
+	console.log(person.name, person.age, person.occupation);
+	}
+	
+	function getOlder2040(){
+	if (person.age<=40 && person.age>=20){
+	person.age = (person.age + 1);
+	document.getElementById("result").innerHTML = "This person is between 20 and 40, aged Dan by one: " + person.age;
+	console.log(person.name, person.age, person.occupation);
+	}
+	else{
+	document.getElementById("result").innerHTML = "This person is not between 20 and 40"}
+	}
+	
+	
+</script>
+<input type = "button" onclick="getOlder()" value="Age Dan"\/>;
+<input type = "button" onclick="getOlder2040()" value="Age Dan if between 20 and 40"\/>;
+
+ <p id="result">
+</body>
+</html>

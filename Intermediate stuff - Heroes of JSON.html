@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html>
+
+<body>
+
+<p id = "output"><p/>
+
+<p style="margin-left: 40px" id = "Hero 1"><p/>
+<p style="margin-left: 40px" id = "Hero 2"><p/>
+<p style="margin-left: 40px" id = "Hero 3"><p/>
+<script>
+
+var superHeroes;
+var requestURL = 'https://raw.githubusercontent.com/womackx/JSONDataRepo/master/example.json';
+
+var request = new XMLHttpRequest();
+request.open('GET', requestURL);
+
+request.responseType = 'json';
+request.send();
+request.onload = function() {
+    var superHeroes = request.response;
+	document.getElementById("output").innerHTML= superHeroes["squadName"] + "<br> Home Town: " + superHeroes["homeTown"] + "<br> Formed: " + superHeroes["formed"] + "<br> Secret Base: " + superHeroes["secretBase"] + "<br> Members: ";
+	document.getElementById("Hero 1").innerHTML= "Name: " + superHeroes["members"][0].name + "<br> Age: " + superHeroes["members"][0].age + "<br> Secret Identity: " + superHeroes["members"][0].secretIdentity + "<br> Powers: " + superHeroes["members"][0].powers;
+	document.getElementById("Hero 2").innerHTML= "Name: " + superHeroes["members"][1].name + "<br> Age: " + superHeroes["members"][1].age + "<br> Secret Identity: " + superHeroes["members"][1].secretIdentity + "<br> Powers: " + superHeroes["members"][1].powers;
+	document.getElementById("Hero 3").innerHTML= "Name: " + superHeroes["members"][2].name + "<br> Age: " + superHeroes["members"][2].age + "<br> Secret Identity: " + superHeroes["members"][2].secretIdentity + "<br> Powers: " + superHeroes["members"][2].powers;
+	};
+
+</script>
+</body>
+</html>

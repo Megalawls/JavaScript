@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html>
+
+<body>
+    <input type="text" id="numbertopass" name="numbertopass" placeholder="Enter any integer here" />
+	<input type="button" onclick="FizzBuzz(document.getElementById('numbertopass').value)" value="FizzBuzz" \/>
+    <input type="button" onclick="DivideBy3(document.getElementById('numbertopass').value)" value="Divide by 3" \/><br>
+	
+	 <p id="Fizz3">
+	
+    <script>
+        var number = 1;
+        var num = 1;
+
+        function FizzBuzz() {
+		    var stopat = document.getElementById('numbertopass').value;
+			document.getElementById("Fizz3").innerHTML = "FizzBuzz for " + stopat + ": <br>";
+            for (var i = 1; i <= stopat; i++) {
+                if (number % 3 === 0 && number % 5 === 0) {
+				document.getElementById("Fizz3").innerHTML += "FizzBuzz <br>"
+                    number++;
+                } else if (number % 3 === 0) {
+				document.getElementById("Fizz3").innerHTML += "Fizz <br>"
+                    number++;
+                } else if (number % 5 === 0) {
+				document.getElementById("Fizz3").innerHTML += "Buzz <br>"
+                    number++;
+                } else {
+				document.getElementById("Fizz3").innerHTML += number + " <br>"
+                    number++;
+                }
+            }
+			number=1;
+        }
+
+        function DivideBy3() {
+            //var num = Math.floor(Math.random() * 100000000000000);
+            var num = document.getElementById('numbertopass').value;
+			document.getElementById("Fizz3").innerHTML = "Divide by 3 for " + num + ": <br>";
+            for (var i = 1; i < 1000; i++) {
+                if (num == 1) {
+                    break;
+                } else if ((num + 1) % 3 === 0) {
+                    num++;
+                    num /= 3;
+                    document.getElementById("Fizz3").innerHTML +="Number is not divisible by three, adding 1 first, number is now " + num + "<br>";
+                } else if ((num - 1) % 3 === 0) {
+                    num--;
+                    num /= 3;
+                   document.getElementById("Fizz3").innerHTML +="Number is not divisible by three, subtracting 1 frist, number is now " + num + "<br>";
+                } else if (num % 3 === 0) {
+                    num /= 3;
+                 document.getElementById("Fizz3").innerHTML +="Divided by three, number is now " + num + "<br>";
+                }
+            }
+			num = 1;
+        }
+    </script>
+
+</body>
+
+</html>

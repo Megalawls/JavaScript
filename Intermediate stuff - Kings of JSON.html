@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html>
+
+<body>
+    <p> King Name:
+        <p/>
+        <input type="text" id="userinput" name="userinput" />
+        <p> Country:
+            <p/>
+            <input type="text" id="country" name="country" />
+            <p> House:
+                <p/>
+                <input type="text" id="house" name="house" />
+                <p> Year:
+                    <p/>
+                    <input type="text" id="year" name="year" /><br>
+                    <input type="button" value="Search" onclick="display(document.getElementById('userinput').value); display(document.getElementById('country').value); display(document.getElementById('house').value); display(document.getElementById('year').value)" />
+
+
+                    <p id="kingoutput">
+                        <p/>
+
+                        <p style="margin-left: 40px" id="Hero 1">
+                            <p/>
+                            <p style="margin-left: 40px" id="Hero 2">
+                                <p/>
+                                <p style="margin-left: 40px" id="Hero 3">
+                                    <p/>
+                                    <script>
+                                        var kings;
+                                        var requestURL = 'https://raw.githubusercontent.com/womackx/JSONDataRepo/master/kings.json';
+                                        var kingName;
+                                        var arrayLength;
+
+                                        var request = new XMLHttpRequest();
+                                        request.open('GET', requestURL);
+
+                                        request.responseType = 'json';
+                                        request.send();
+
+
+                                        function display() {
+                                            document.getElementById("kingoutput").innerHTML = ""
+                                            var kings = request.response;
+
+                                            var kingName = document.getElementById("userinput").value;
+                                            var countryName = document.getElementById("country").value;
+                                            var houseName = document.getElementById('house').value;
+                                            var kingYears = document.getElementById('year').value;
+
+
+
+                                            arrayLength = kings.length;
+
+                                            for (var i = 0; i < arrayLength; i++) {
+                                                var dates = kings[i].yrs;
+                                                var datesplit = dates.split("-");
+                                                if (kings[i].nm.toLowerCase().includes(kingName.toLowerCase()) && kings[i].cty.toLowerCase().includes(countryName.toLowerCase()) && kings[i].hse.toLowerCase().includes(houseName.toLowerCase())) {
+                                                    if (kingYears == 0) {
+                                                        document.getElementById("kingoutput").innerHTML += "King Name: " + kings[i].nm + "<br> Country: " + kings[i].cty + "<br> House: " + kings[i].hse + "<br> Reign: " + kings[i].yrs + "<br><br>";
+                                                    } else if (kingYears >= datesplit[0] && kingYears <= datesplit[1]) {
+                                                        document.getElementById("kingoutput").innerHTML += "King Name: " + kings[i].nm + "<br> Country: " + kings[i].cty + "<br> House: " + kings[i].hse + "<br> Reign: " + kings[i].yrs + "<br><br>";
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    </script>
+</body>
+
+</html>

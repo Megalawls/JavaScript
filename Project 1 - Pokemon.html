@@ -1,0 +1,162 @@
+<!DOCTYPE HTML>
+<html>
+
+<body>
+
+    <p>Chose Types: </p>
+    <select name="Attacker" onchange="setType()">
+        <option value="noType"selected disabled>Attacker Type</option>
+        <option value="normal">Normal</option>
+        <option value="fire">Fire</option>
+        <option value="water">Water</option>
+		<option value="electric">Electric</option>
+		<option value="grass">Grass</option>
+		<option value="ice">Ice</option>
+		<option value="fighting">Fighting</option>
+		<option value="poison">Poison</option>
+		<option value="ground">Ground</option>
+		<option value="flying">Flying</option>
+		<option value="psychic">Psychic</option>
+		<option value="bug">Bug</option>
+		<option value="rock">Rock</option>
+		<option value="ghost">Ghost</option>
+		<option value="dragon">Dragon</option>
+		<option value="dark">Dark</option>
+		<option value="steel">Steel</option>
+		<option value="fairy">Fairy</option>
+		<option value="noType">None</option>
+    </select>
+    <select name="Defender1" onchange="setType()">
+        <option value="noType"selected disabled>Defender Type 1</option>
+        <option value="normal">Normal</option>
+        <option value="fire">Fire</option>
+        <option value="water">Water</option>
+		<option value="electric">Electric</option>
+		<option value="grass">Grass</option>
+		<option value="ice">Ice</option>
+		<option value="fighting">Fighting</option>
+		<option value="poison">Poison</option>
+		<option value="ground">Ground</option>
+		<option value="flying">Flying</option>
+		<option value="psychic">Psychic</option>
+		<option value="bug">Bug</option>
+		<option value="rock">Rock</option>
+		<option value="ghost">Ghost</option>
+		<option value="dragon">Dragon</option>
+		<option value="dark">Dark</option>
+		<option value="steel">Steel</option>
+		<option value="fairy">Fairy</option>
+		<option value="noType">None</option>
+    </select>
+    <select name="Defender2" onchange="setType()">
+        <option value="noType"selected disabled>Defender Type 2</option>
+        <option value="normal">Normal</option>
+        <option value="fire">Fire</option>
+        <option value="water">Water</option>
+		<option value="electric">Electric</option>
+		<option value="grass">Grass</option>
+		<option value="ice">Ice</option>
+		<option value="fighting">Fighting</option>
+		<option value="poison">Poison</option>
+		<option value="ground">Ground</option>
+		<option value="flying">Flying</option>
+		<option value="psychic">Psychic</option>
+		<option value="bug">Bug</option>
+		<option value="rock">Rock</option>
+		<option value="ghost">Ghost</option>
+		<option value="dragon">Dragon</option>
+		<option value="dark">Dark</option>
+		<option value="steel">Steel</option>
+		<option value="fairy">Fairy</option>
+		<option value="noType">None</option>
+    </select>
+
+
+    <input type="button" name="button" value="Calculate" onclick="damageCalc(a, d1, d2)"></button>
+
+    <p id="result"></p>
+</body>
+<script>
+    var a;
+    var d1;
+    var d2;
+
+    function setType() {
+        a = document.getElementsByName("Attacker")[0].value;
+        d1 = document.getElementsByName("Defender1")[0].value;
+        d2 = document.getElementsByName("Defender2")[0].value;
+    }
+
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+
+    var typeID = {
+        normal: 0,
+        fire: 1,
+        water: 2,
+        electric: 3,
+        grass: 4,
+        ice: 5,
+        fighting: 6,
+        poison: 7,
+        ground: 8,
+        flying: 9,
+        psychic: 10,
+        bug: 11,
+        rock: 12,
+        ghost: 13,
+        dragon: 14,
+        dark: 15,
+        steel: 16,
+        fairy: 17,
+        noType: 18
+    };
+
+    var typeCalc = {
+        normal: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 50, 0, 100, 100, 50, 100, 100],
+        fire: [100, 50, 50, 100, 200, 200, 100, 100, 100, 100, 100, 200, 50, 100, 50, 100, 200, 100, 100],
+        water: [100, 200, 50, 100, 50, 100, 100, 100, 200, 100, 100, 100, 200, 100, 50, 100, 100, 100, 100],
+        electric: [100, 100, 200, 50, 50, 100, 100, 100, 0, 200, 100, 100, 100, 100, 50, 100, 100, 100, 100],
+        grass: [100, 50, 200, 100, 50, 100, 100, 50, 200, 50, 100, 50, 200, 100, 50, 100, 50, 100, 100],
+        ice: [100, 50, 50, 100, 200, 50, 100, 100, 200, 200, 100, 100, 100, 100, 200, 100, 50, 100, 100],
+        fighting: [200, 100, 100, 100, 100, 200, 100, 50, 100, 50, 50, 50, 200, 0, 100, 200, 200, 50, 100],
+        poison: [100, 100, 100, 100, 200, 100, 100, 50, 50, 100, 100, 100, 50, 50, 100, 100, 0, 200, 100],
+        ground: [100, 200, 100, 200, 50, 100, 100, 200, 100, 0, 100, 50, 200, 100, 100, 100, 200, 100, 100],
+        flying: [100, 100, 100, 50, 200, 100, 200, 100, 100, 100, 100, 200, 50, 100, 100, 100, 50, 100, 100],
+        psychic: [100, 100, 100, 100, 100, 100, 200, 200, 100, 100, 50, 100, 100, 100, 100, 0, 50, 100, 100],
+        bug: [100, 50, 100, 100, 200, 100, 50, 50, 100, 50, 200, 100, 100, 50, 100, 200, 50, 50, 100],
+        rock: [100, 200, 100, 100, 100, 200, 50, 100, 50, 200, 100, 200, 100, 100, 100, 100, 50, 100, 100],
+        ghost: [0, 100, 100, 100, 100, 100, 100, 100, 100, 100, 200, 100, 100, 200, 100, 50, 100, 100, 100],
+        dragon: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 200, 100, 50, 0, 100],
+        dark: [100, 100, 100, 100, 100, 100, 50, 100, 100, 100, 200, 100, 100, 200, 100, 50, 100, 50, 100],
+        steel: [100, 50, 50, 50, 100, 200, 100, 100, 100, 100, 100, 200, 100, 100, 100, 100, 50, 200, 100],
+        fairy: [100, 50, 100, 100, 100, 100, 200, 50, 100, 100, 100, 100, 100, 100, 200, 200, 50, 100, 100],
+        noType: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100]
+    };
+
+    function damageCalc(a, d1, d2) {
+        //console.log(a);
+        //console.log(d1);
+        //console.log(d2);
+
+        var typed1 = typeID[d1];
+        var typed2 = typeID[d2];
+
+        var multiplier1 = typeCalc[a][typed1];
+        var multiplier2 = typeCalc[a][typed2];
+
+        var damagemultiplier = (multiplier1 / 100) * (multiplier2 / 100);
+
+        //console.log(typed1);
+        //console.log(typed2);
+        //console.log(multiplier1);
+        //console.log(multiplier2);
+        //console.log(damagemultiplier);
+
+        document.getElementById("result").innerHTML = capitalizeFirstLetter(a) + " is " + damagemultiplier + "x effective against " + capitalizeFirstLetter(d1) + "/" + capitalizeFirstLetter(d2);
+    };
+</script>
+
+</html>
